@@ -39,6 +39,12 @@ replica --yes "run the tests and fix failures"   # skip approval prompts
 - `replica/agent.py` streams each turn. If the model asks for tools, it checks each input against the tool's schema, runs the tool, and sends the results back. It repeats until the model answers in plain text. History is append-only, with thinking blocks passed back unchanged. If a safety classifier declines a request, it is re-run on Anthropic's recommended fallback model (`fallbacks: "default"`).
 - `replica/tools.py` holds the tool definitions and how they run. Every path is resolved inside `--root`. Tool output is cut off at 30,000 characters.
 
+## Try it in the browser
+
+`web/playground.html` is the same agent loop as a single web page. It runs on your own Claude account, so you don't need an API key. Publish it as a claude.ai Artifact with the `sample` capability.
+
+The page doesn't have the CLI's shell. Instead it works on a virtual project folder: `glob`, `read_file`, `write_file`, `edit_file` and `grep` behave as they do in the CLI, and `run_js` runs a JavaScript file in a sandboxed worker with Node-style `require`. Claude gets only a few tool rounds per message there, so larger tasks can take more than one message.
+
 ## Tests
 
 ```bash
